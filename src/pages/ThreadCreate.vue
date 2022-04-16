@@ -1,13 +1,13 @@
 <template>
-	<div class="container">
-		<div class="col-full push-top">
+	
+		<div v-if="asyncDataStatus_ready" class="col-full push-top">
 			<h1>
 				Create new thread in <i>{{ forum.name }}</i>
 			</h1>
 
 			<thread-editor @save="save" @cancel="cancel" @dirty="formIsDirty = true" @clean="formIsDirty = false"/>
 		</div>
-	</div>
+	
 </template>
 
 <script>
@@ -33,6 +33,7 @@ export default {
 	mixins:[asyncDataStatus],
 	computed: {
 		forum() {
+			console.log(findById(this.$store.state.forums.items, this.forumId))
 			return findById(this.$store.state.forums.items, this.forumId)
 		},
 	},
@@ -61,8 +62,8 @@ export default {
 			if(!confirmed) return false 
 		}	
 	},
-	created(){
-		this.fetchForum({ id: this.forumId })
+	async created(){
+		await this.fetchForum({ id: this.forumId })
 		this.asyncDataStatus_fetched()
 	}
 };

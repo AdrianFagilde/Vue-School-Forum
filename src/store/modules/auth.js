@@ -13,6 +13,11 @@ export default {
     },
   },
   actions: {
+    async updateLastVisitAt( {state}){
+      await firebase.firestore().collection('users').doc(state.authId).update({
+        lastVisitAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+    },
     async updateEmail({state}, {email}){
       console.log(state.authId)
       return firebase.auth().currentUser.updateEmail(email)
@@ -65,9 +70,6 @@ export default {
         const { addNotification } = useNotifications()
         addNotification({message: 'Error uploading avatar image', type: 'error'})
       }
-      
-
-      
     },
     signInWithEmailAndPassword(context, { email, password }) {
       return firebase.auth().signInWithEmailAndPassword(email, password);
@@ -92,7 +94,8 @@ export default {
         );
       }
     },
-    async signOut({ commit }) {
+    async signOut({ commit, dispatch }) {
+      await dispatch('updateLastVisitAt')
       await firebase.auth().signOut();
 
       commit("setAuthId", null);

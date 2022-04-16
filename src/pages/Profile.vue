@@ -7,7 +7,7 @@
 				<user-profile-card-editor v-else :user="user" />
 
 				<p class="text-xsmall text-faded text-center">
-					Member since {{ firebase.auth.UserMetadata().creationTime() }}}, last visited {{ firebase.auth.UserMetadata().lastSignInTime() }} hours ago
+					Member since <AppDate :timestamp="user.registeredAt"/>  , last visited <AppDate :timestamp="user.lastVisitAt"/>
 				</p>
 				<div class="text-center">
 					<hr />
@@ -39,6 +39,7 @@
 import PostList from "@/components/PostList";
 import UserProfileCard from "@/components/UserProfileCard";
 import UserProfileCardEditor from "@/components/UserProfileCardEditor";
+
 import { mapGetters } from "vuex";
 import asyncDataStatus from '@/mixins/asyncDataStatus'
 export default {
