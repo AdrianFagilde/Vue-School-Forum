@@ -31,7 +31,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Authors and acknowledgment
-Vue School by BitterBrains
-See [Configuration Reference](https://cli.vuejs.org/config/).
